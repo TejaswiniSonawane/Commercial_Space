@@ -22,7 +22,7 @@ export const AppText = withTheme(props => {
   ];
   return (
     <Text {...props} style={textStyles}>
-      {typeof children === 'string' && !noTranslate ? t(children) : children}
+      {children}
     </Text>
   );
 });
@@ -30,7 +30,7 @@ const styles = {
   text: theme => ({
     fontSize: theme.fontSizes.base,
     color: '#363537',
-    ...getFontStyleObject({family: 'Lato', weight: 'Regular'}),
+    // ...getFontStyleObject({family: 'Lato', weight: 'Regular'}),
   }),
   bold: theme => ({
     // ...getFontStyleObject({family: 'Lato', weight: 'Bold'}),

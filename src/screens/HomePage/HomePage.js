@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Dimensions, Image, ScrollView, Text, View} from 'react-native';
 import {Button} from 'react-native-elements';
-import {Dropdown} from 'react-native-material-dropdown';
 import styles from './styles.js';
+import {DropdownComponent} from '../../components/Dropdown.js';
 
 const window = Dimensions.get('window');
 const state = {
@@ -26,8 +26,11 @@ const state = {
 };
 
 export const HomePage = () => {
+  const [overlay, toggleOverlay] = useState(false);
   return (
-    <ScrollView contentContainerStyle={[styles.scroller]} scrollsToTop={false}>
+    <ScrollView
+      contentContainerStyle={[styles.scroller, {opacity: overlay ? 0.5 : 1}]}
+      scrollsToTop={false}>
       <View style={styles.container}>
         <Image style={styles.Logo} source={require('../../images/logo1.jpg')} />
         <Text style={styles.ProjectName}> Singapore Commercial Sapce </Text>
@@ -52,97 +55,25 @@ export const HomePage = () => {
             <Text style={styles.listLable}>Listing for Rent</Text>
           </View>
         </View>
+        <DropdownComponent
+          label={'Location'}
+          options={[
+            {value: 'option1', label: 'Option1'},
+            {value: 'option3', label: 'Option3'},
+            {value: 'option2', label: 'Option2'},
+          ]}
+          placeholder={'Select District wise'}
+          onToggleModal={status => {
+            toggleOverlay(status);
+          }}
+          onSelect={values => {
+            console.log('values', values);
+            toggleOverlay(false);
+          }}
+        />
         <View style={styles.searchView}>
           <Text style={styles.searchLabel}> Property Search </Text>
-          <Text style={{padding: 10}}>Location</Text>
-          <Dropdown
-            placeholder="--Search District Wise--"
-            data={state.data}
-            selectedItemColor="red"
-            itemColor="#000"
-            baseColor="#808080"
-            lineWidth={0}
-            inputContainerStyle={{backgroundColor: '#fff', paddingLeft: 1}}
-            containerStyle={{
-              borderBottomColor: 'lightgrey',
-              marginLeft: 10,
-              marginRight: 10,
-            }}
-            dropdownOffset={{top: 5}}
-            // onChangeText={(loaction) => this.handleChange(location)}
-          />
-          {/* ----- */}
-          <Text style={{padding: 10}}>Property Type</Text>
-          <Dropdown
-            placeholder="--Property Type--"
-            data={state.data}
-            selectedItemColor="red"
-            itemColor="#000"
-            baseColor="#808080"
-            lineWidth={0}
-            inputContainerStyle={{backgroundColor: '#fff', paddingLeft: 1}}
-            containerStyle={{
-              borderBottomColor: 'lightgrey',
-              marginLeft: 10,
-              marginRight: 10,
-            }}
-            dropdownOffset={{top: 5}}
-            // onChangeText={(loaction) => this.handleChange(location)}
-          />
-          {/* --------- */}
-          <Text style={{padding: 10}}>Transaction type</Text>
-          <Dropdown
-            placeholder="--Transaction type--"
-            data={state.data}
-            selectedItemColor="red"
-            itemColor="#000"
-            baseColor="#808080"
-            lineWidth={0}
-            inputContainerStyle={{backgroundColor: '#fff', paddingLeft: 1}}
-            containerStyle={{
-              borderBottomColor: 'lightgrey',
-              marginLeft: 10,
-              marginRight: 10,
-            }}
-            dropdownOffset={{top: 5}}
-            // onChangeText={(loaction) => this.handleChange(location)}
-          />
-          {/* --- */}
-          <Text style={{padding: 10}}>Furnishing type</Text>
-          <Dropdown
-            placeholder="--Furnishing type--"
-            data={state.data}
-            selectedItemColor="red"
-            itemColor="#000"
-            baseColor="#808080"
-            lineWidth={0}
-            inputContainerStyle={{backgroundColor: '#fff', paddingLeft: 1}}
-            containerStyle={{
-              borderBottomColor: 'lightgrey',
-              marginLeft: 10,
-              marginRight: 10,
-            }}
-            dropdownOffset={{top: 5}}
-            // onChangeText={(loaction) => this.handleChange(location)}
-          />
-          {/* ---- */}
-          <Text style={{padding: 10}}>Tenure Option</Text>
-          <Dropdown
-            placeholder="--Tenure Option--"
-            data={state.data}
-            selectedItemColor="red"
-            itemColor="#000"
-            baseColor="#808080"
-            lineWidth={0}
-            inputContainerStyle={{backgroundColor: '#fff', paddingLeft: 1}}
-            containerStyle={{
-              borderBottomColor: 'lightgrey',
-              marginLeft: 10,
-              marginRight: 10,
-            }}
-            dropdownOffset={{top: 5}}
-            // onChangeText={(loaction) => this.handleChange(location)}
-          />
+
           {/* ----- PSF--------*/}
           <Text style={{padding: 10}}>PSF (per sqft.)</Text>
           {/* ------ */}
