@@ -5,45 +5,53 @@ import {createStackNavigator} from 'react-navigation-stack';
 // import AuthLoadingScreen          from '../components/AuthLoading/AuthLoading.js';
 import SideMenu from '../components/SideMenu/SideMenu.js';
 import {HomePage} from '../screens/HomePage/HomePage.js';
-
-const HomeStack = createStackNavigator({
-  HomePage: {
-    screen: HomePage,
-    navigationOptions: {
-      headerShown: false,
+import {HeaderBar} from '../components/Header/Header.js';
+import React from 'react';
+const HomeStack = createStackNavigator(
+  {
+    HomePage: {
+      screen: HomePage,
+      navigationOptions: {
+        // headerShown: false,
+      },
+    },
+    // PropertiesScreen: {
+    //   screen: PropertiesScreen,
+    //   navigationOptions: {
+    //     headerShown: false,
+    //   },
+    // },
+    // RequirementScreen: {
+    //   screen: RequirementScreen,
+    //   navigationOptions: {
+    //     headerShown: false,
+    //   },
+    // },
+    // NewsScreen: {
+    //   screen: NewsScreen,
+    //   navigationOptions: {
+    //     headerShown: false,
+    //   },
+    // },
+    // ProjectsScreen: {
+    //   screen: ProjectsScreen,
+    //   navigationOptions: {
+    //     headerShown: false,
+    //   },
+    // },
+    // ContactUsScreen: {
+    //   screen: ContactUsScreen,
+    //   navigationOptions: {
+    //     headerShown: false,
+    //   },
+    // },
+  },
+  {
+    defaultNavigationOptions: {
+      header: <HeaderBar />,
     },
   },
-  // PropertiesScreen: {
-  //   screen: PropertiesScreen,
-  //   navigationOptions: {
-  //     headerShown: false,
-  //   },
-  // },
-  // RequirementScreen: {
-  //   screen: RequirementScreen,
-  //   navigationOptions: {
-  //     headerShown: false,
-  //   },
-  // },
-  // NewsScreen: {
-  //   screen: NewsScreen,
-  //   navigationOptions: {
-  //     headerShown: false,
-  //   },
-  // },
-  // ProjectsScreen: {
-  //   screen: ProjectsScreen,
-  //   navigationOptions: {
-  //     headerShown: false,
-  //   },
-  // },
-  // ContactUsScreen: {
-  //   screen: ContactUsScreen,
-  //   navigationOptions: {
-  //     headerShown: false,
-  //   },
-  // },
-});
+);
 
 const MainStack = createDrawerNavigator(
   {
