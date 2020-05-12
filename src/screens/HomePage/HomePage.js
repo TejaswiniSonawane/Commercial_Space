@@ -3,7 +3,8 @@ import {Dimensions, Image, ScrollView, Text, View} from 'react-native';
 import {Button} from 'react-native-elements';
 import styles from './styles.js';
 import {DropdownComponent} from '../../components/Dropdown.js';
-import { PropertyListComponent } from '../../components/PropertyList.js';
+import {PropertyListComponent} from '../../components/PropertyList.js';
+import {PopularPlaces} from './PopularPlaces.js';
 
 const window = Dimensions.get('window');
 const state = {
@@ -24,16 +25,20 @@ const state = {
       price: '37,050',
     },
   ],
-  PlacesData: [{
-    name: 'West Singapore',
-    no: 1,
-  }, {
-    name: 'East Singapore',
-    no: 2,
-  }, {
-    name: 'North Singapore',
-    no: 1,
-  }],
+  PlacesData: [
+    {
+      name: 'West Singapore',
+      no: 1,
+    },
+    {
+      name: 'East Singapore',
+      no: 2,
+    },
+    {
+      name: 'North Singapore',
+      no: 1,
+    },
+  ],
 };
 
 export const HomePage = () => {
@@ -107,7 +112,7 @@ export const HomePage = () => {
               <Text style={styles.propertyLabel}>PROPERTIES </Text>
             </View>
           ) : null}
-          
+
           <PropertyListComponent
             PropertyData={state.PropertyData}
             onSelect={values => {
@@ -116,39 +121,8 @@ export const HomePage = () => {
           />
           {/* block end */}
         </View>
-         
-         <View>
-          <View style={{ padding: 10 }}>
-            <Text style={styles.propertyLabel}>MOST POPULAR</Text>
-            <Text style={styles.propertyLabel}>PLACES</Text>
-          </View>
-          {state.PlacesData.length > 0 ?
-            state.PlacesData.map((place, i) => {
-              return (
-                <View style={{ borderBottomWidth: 1, borderBottomColor: "#D3D3D3", marginBottom: 10, }} key={i}>
-                  <Image
-                    style={{
-                      height: 150,
-                      width: '100%',
-                    }}
-                    source={require('../../images/property2.jpg')}
-                  />
-                  <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', margin: 15 }}>
-                    <View style={{ flex: 1 }}>
-                      <Text >{place.name}</Text>
-                    </View>
-                    <View style={{ flex: 1 }} />
-                    <View
-                      style={{ flex: 1 }}>
-                      <Text style={{ textAlign: 'right' }}>{place.no} Properties</Text>
-                    </View>
-                  </View>
-                </View>
-              );
-            })
-            : null}
-        </View>
-        {/* -------------------------------------- */}
+
+        <PopularPlaces />
       </View>
     </ScrollView>
   );
