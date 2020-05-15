@@ -15,6 +15,7 @@ import {
   tiny,
   borderRadius,
   xLarge,
+  base,
 } from '../../constants/Theme/index.js';
 
 const window = Dimensions.get('window');
@@ -36,7 +37,7 @@ export const News = () => {
   const [loading, setLoading] = useState(true);
   React.useEffect(() => {
     axios
-      .get('/list_news.php')
+      .get('https://www.singapore-commercialspace.com/Webservices/list_news')
       .then(res => {
         // console.log('res', res.data);
         setList(res.data);
@@ -47,24 +48,21 @@ export const News = () => {
         setLoading(false);
       });
   }, []);
-  console.log('list', list);
   return (
     <View style={{backgroundColor: '#F5F5F5'}}>
       <View
         style={{
-          flexDirection: 'column',
           justifyContent: 'center',
           alignSelf: 'center',
         }}>
-        <Text
+        <AppText
           style={{
             color: '#15317E',
             fontSize: 42,
-            paddingBottom: 10,
-            textAlign: 'center',
-          }}>
+          }}
+          type={['center']}>
           NEWS
-        </Text>
+        </AppText>
         <View style={{justifyContent: 'center'}}>
           <View
             style={{
@@ -90,14 +88,17 @@ export const News = () => {
       {loading ? (
         <ActivityIndicator />
       ) : (
-        <View style={{margin: 10}}>
-          <FlatList
-            keyExtractor={(item, index) => `${item.id}-${index}`}
-            data={list}
-            // data={state.newsdata}
-            renderItem={({item, index}) => <NewsBox key={index} {...item} />}
-          />
-        </View>
+        <FlatList
+          contentContainerStyle={{paddingHorizontal: `${base}%`}}
+          keyExtractor={(item, index) => `${item.id}-${index}`}
+          data={list}
+          ListEmptyComponent={
+            !loading && (
+              <AppText type={['center', 'large']}>No News Found</AppText>
+            )
+          }
+          renderItem={({item, index}) => <NewsBox key={index} {...item} />}
+        />
       )}
     </View>
   );
@@ -109,8 +110,9 @@ const NewsBox = props => {
     <TouchableOpacity
       style={{
         flex: 1,
-        marginTop: 10,
-        marginBottom: 10,
+        // marginTop: 10,
+        // marginBottom: 10, top ani bottom vegla denya peksha vertical daycha direct
+        marginVertical: `${small}%`, //and dynamic thevaycha margin
         elevation: 2,
         backgroundColor: '#fff',
         borderColor: '#D3D3D3',
@@ -123,22 +125,31 @@ const NewsBox = props => {
       }}>
       <Image
         style={{
-          height: 150,
+          // height: 150, height dynamic according to screen height
+          height: window.height * 0.2,
           width: '100%',
         }}
-        // source={require('../../images/property2.jpg')}
+        resizeMode="cover" //very important property for image
         source={{uri: image}}
       />
       <View style={{margin: 20}}>
-        <Text style={{color: '#000', fontSize: 22}}>{title}</Text>
-        <Text
+        <AppText type={['large', 'bold']}>{title}</AppText>
+        {/* <Text style={{color: '#000', fontSize: 22}}></Text>  */}
+        {/* <Text
           style={{
             color: '#666',
             fontSize: 16,
             paddingTop: 5,
           }}>
           Read more
-        </Text>
+        </Text> */}
+
+        {/* //Apptext component banavla ahe me toh vapaar */}
+        {/* example usage */}
+        <TouchableOpacity style={{marginTop: `${tiny}%`}}>
+          {/* //TouchableOpacity because tyala touch cha feel daycha aplyala */}
+          <AppText type={['primary']}>Read More</AppText>
+        </TouchableOpacity>
       </View>
     </TouchableOpacity>
   );

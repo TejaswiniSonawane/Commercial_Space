@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Dimensions, Image, ScrollView, Text, View} from 'react-native';
 import {Button} from 'react-native-elements';
 import styles from './styles.js';
 import {DropdownComponent} from '../../components/Dropdown.js';
 import {PropertyListComponent} from '../../components/PropertyList.js';
 import {PopularPlaces} from './PopularPlaces.js';
+import Axios from 'axios';
+import {AppText} from '../../components/AppText.js';
 
 const window = Dimensions.get('window');
 const state = {
@@ -29,6 +31,18 @@ const state = {
 
 export const HomePage = () => {
   const [overlay, toggleOverlay] = useState(false);
+  const [count, setCount] = useState();
+  useEffect(() => {
+    Axios.post(
+      'https://www.singapore-commercialspace.com/Webservice/count_hightlights.php',
+    )
+      .then(res => {
+        setCount(res.data.records[0]);
+      })
+      .catch(err => {
+        console.log('err');
+      });
+  }, []);
   return (
     <ScrollView
       contentContainerStyle={[styles.scroller, {opacity: overlay ? 0.5 : 1}]}
@@ -44,8 +58,8 @@ export const HomePage = () => {
               style={styles.sepBlockImg}
               source={require('../../images/logo5.png')}
             />
-            <Text>24</Text>
-            <Text style={styles.listLable}>Listing for Sale</Text>
+            <AppText>{count?.sale_count ?? '0'}</AppText>
+            <AppText>{'Listing for Sale'}</AppText>
           </View>
           <View style={{flex: 0.07, backgroundColor: '#fff'}} />
           <View style={styles.sepBlock}>
@@ -53,8 +67,8 @@ export const HomePage = () => {
               style={styles.sepBlockImg}
               source={require('../../images/logo5.png')}
             />
-            <Text>736</Text>
-            <Text style={styles.listLable}>Listing for Rent</Text>
+            <AppText>{count?.rent_count ?? '0'}</AppText>
+            <AppText>Listing for Rent</AppText>
           </View>
         </View>
         <DropdownComponent

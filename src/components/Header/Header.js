@@ -3,10 +3,12 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import {Header, Icon} from 'react-native-elements';
 import {NavigationActions} from 'react-navigation';
 import styles from './styles.js';
+import {AppText} from '../AppText.js';
 // import {useNavigation} from '../../hooks/'
 
 export const HeaderBar = props => {
   const {openDrawer} = props.navigation;
+  const title = props.scene?.descriptor?.options?.title;
   return (
     <Header
       placement="left"
@@ -14,7 +16,7 @@ export const HeaderBar = props => {
         <View style={{flexDirection: 'row', cursor: 'pointer'}}>
           <TouchableOpacity style={{width: 40}} onPress={() => openDrawer()}>
             <Icon
-              size={30}
+              size={24}
               name="menu"
               type="material-community"
               color="#fff"
@@ -23,27 +25,10 @@ export const HeaderBar = props => {
         </View>
       }
       centerComponent={
-        <TouchableOpacity
-          onPress={
-            () => {}
-            //  this.navigateScreen('BookingTabView')
-          }>
-          <Text style={{alignSelf: 'center', fontSize: 24, color: '#fff'}}>
-            {/* {this.props.headerName} */}
-          </Text>
+        <TouchableOpacity onPress={() => {}}>
+          <AppText type={['bold', 'white', 'large']}>{title ?? ''}</AppText>
         </TouchableOpacity>
       }
-      // rightComponent={
-      //   // this.props.showBackBtn ? (
-      //   <TouchableOpacity
-      //     onPress={
-      //       () => {}
-      //       // this.props.navigation.dispatch(NavigationActions.back())
-      //     }>
-      //     <Icon size={28} name="arrow-left" type="feather" color="#fff" />
-      //   </TouchableOpacity>
-      //   // ) : null
-      // }
       containerStyle={styles.container}
     />
   );

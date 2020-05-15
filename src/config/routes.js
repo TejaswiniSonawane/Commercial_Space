@@ -13,6 +13,7 @@ const HomeStack = createStackNavigator(
     HomePage: {
       screen: HomePage,
       navigationOptions: {
+        title: 'Dashboard',
         // headerShown: false,
       },
     },
@@ -31,6 +32,7 @@ const HomeStack = createStackNavigator(
     NewsScreen: {
       screen: News,
       navigationOptions: {
+        title: 'News',
         // headerShown: false,
       },
     },
