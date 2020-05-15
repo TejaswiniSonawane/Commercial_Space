@@ -61,7 +61,7 @@ const Place = props => {
             width: '100%',
             paddingHorizontal: `${small}%`,
           }}>
-          <AppText type={['white']}>{area_name}</AppText>
+          <AppText type={['white']}>{area_name} Singapore</AppText>
           <AppText type={['white']}>{property_count} Properties</AppText>
         </View>
       </ImageOverlay>

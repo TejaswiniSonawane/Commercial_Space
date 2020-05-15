@@ -25,20 +25,6 @@ const state = {
       price: '37,050',
     },
   ],
-  PlacesData: [
-    {
-      name: 'West Singapore',
-      no: 1,
-    },
-    {
-      name: 'East Singapore',
-      no: 2,
-    },
-    {
-      name: 'North Singapore',
-      no: 1,
-    },
-  ],
 };
 
 export const HomePage = () => {

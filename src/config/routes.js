@@ -3,10 +3,11 @@ import {createSwitchNavigator} from 'react-navigation';
 import {createDrawerNavigator} from 'react-navigation-drawer';
 import {createStackNavigator} from 'react-navigation-stack';
 // import AuthLoadingScreen          from '../components/AuthLoading/AuthLoading.js';
-import SideMenu from '../components/SideMenu/SideMenu.js';
+import {SideMenu} from '../components/SideMenu/SideMenu.js';
 import {HomePage} from '../screens/HomePage/HomePage.js';
 import {HeaderBar} from '../components/Header/Header.js';
 import React from 'react';
+import {News} from '../screens/News/News.js';
 const HomeStack = createStackNavigator(
   {
     HomePage: {
@@ -27,12 +28,12 @@ const HomeStack = createStackNavigator(
     //     headerShown: false,
     //   },
     // },
-    // NewsScreen: {
-    //   screen: NewsScreen,
-    //   navigationOptions: {
-    //     headerShown: false,
-    //   },
-    // },
+    NewsScreen: {
+      screen: News,
+      navigationOptions: {
+        // headerShown: false,
+      },
+    },
     // ProjectsScreen: {
     //   screen: ProjectsScreen,
     //   navigationOptions: {
@@ -48,7 +49,7 @@ const HomeStack = createStackNavigator(
   },
   {
     defaultNavigationOptions: {
-      header: <HeaderBar />,
+      header: navigation => <HeaderBar {...navigation} />,
     },
   },
 );

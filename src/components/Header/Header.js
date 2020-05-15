@@ -5,20 +5,14 @@ import {NavigationActions} from 'react-navigation';
 import styles from './styles.js';
 // import {useNavigation} from '../../hooks/'
 
-export const HeaderBar = () => {
-  // const navigation = useNavigation()
-
+export const HeaderBar = props => {
+  const {openDrawer} = props.navigation;
   return (
     <Header
       placement="left"
       leftComponent={
         <View style={{flexDirection: 'row', cursor: 'pointer'}}>
-          <TouchableOpacity
-            style={{width: 40}}
-            onPress={
-              () => {}
-              // this.props.navigation.toggleDrawer()
-            }>
+          <TouchableOpacity style={{width: 40}} onPress={() => openDrawer()}>
             <Icon
               size={30}
               name="menu"
