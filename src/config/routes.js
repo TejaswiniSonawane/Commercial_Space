@@ -8,6 +8,9 @@ import {HomePage} from '../screens/HomePage/HomePage.js';
 import {HeaderBar} from '../components/Header/Header.js';
 import React from 'react';
 import {News} from '../screens/News/News.js';
+import {NewsDetails} from '../screens/News/NewsDetails.js';
+import {Requirement} from '../screens/Requirement/Requirement.js';
+import {ContactUs} from '../screens/ContactUs/ContactUs.js';
 const HomeStack = createStackNavigator(
   {
     HomePage: {
@@ -23,16 +26,25 @@ const HomeStack = createStackNavigator(
     //     headerShown: false,
     //   },
     // },
-    // RequirementScreen: {
-    //   screen: RequirementScreen,
-    //   navigationOptions: {
-    //     headerShown: false,
-    //   },
-    // },
+    RequirementScreen: {
+      screen: Requirement,
+      navigationOptions: {
+        title: 'Dashboard',
+        // headerShown: false,
+      },
+    },
     NewsScreen: {
       screen: News,
       navigationOptions: {
         title: 'News',
+        // headerShown: false,
+      },
+    },
+
+    NewsDetailsScreen: {
+      screen: NewsDetails,
+      navigationOptions: {
+        title: 'Dashboard',
         // headerShown: false,
       },
     },
@@ -42,12 +54,13 @@ const HomeStack = createStackNavigator(
     //     headerShown: false,
     //   },
     // },
-    // ContactUsScreen: {
-    //   screen: ContactUsScreen,
-    //   navigationOptions: {
-    //     headerShown: false,
-    //   },
-    // },
+    ContactUsScreen: {
+      screen: ContactUs,
+      navigationOptions: {
+        title: 'Dashboard',
+        // headerShown: false,
+      },
+    },
   },
   {
     defaultNavigationOptions: {

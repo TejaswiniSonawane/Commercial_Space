@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Text,
   Image,
+  ScrollView,
 } from 'react-native';
 import {AppText} from '../../components/AppText.js';
 import {
@@ -17,6 +18,7 @@ import {
   xLarge,
   base,
 } from '../../constants/Theme/index.js';
+import styles from './styles.js';
 
 const window = Dimensions.get('window');
 const state = {
@@ -30,12 +32,21 @@ const state = {
       id: '2',
       title: 'Capital and Commercial Trust sells Twenty Anson for S$5116m',
     },
+    {
+      id: '3',
+      title: 'Capital Anson for S$5116m',
+    },
   ],
 };
-export const News = () => {
+export const News = props => {
+  // console.log('here props', props);
+  const {navigation} = props;
+  // console.log('here i got----------', navigation);
+
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(true);
   React.useEffect(() => {
+    // setLoading(false);
     axios
       .get('https://www.singapore-commercialspace.com/Webservices/list_news')
       .then(res => {
@@ -49,70 +60,79 @@ export const News = () => {
       });
   }, []);
   return (
-    <View style={{backgroundColor: '#F5F5F5'}}>
-      <View
-        style={{
-          justifyContent: 'center',
-          alignSelf: 'center',
-        }}>
-        <AppText
+    <ScrollView contentContainerStyle={[styles.scroller]} scrollsToTop={false}>
+      <View style={{backgroundColor: '#F5F5F5'}}>
+        <View
           style={{
-            color: '#15317E',
-            fontSize: 42,
-          }}
-          type={['center']}>
-          NEWS
-        </AppText>
-        <View style={{justifyContent: 'center'}}>
-          <View
+            justifyContent: 'center',
+            alignSelf: 'center',
+          }}>
+          <AppText
             style={{
-              borderBottomColor: '#D3D3D3',
-              borderBottomWidth: 2,
-              width: 150,
-              alignSelf: 'center',
-              marginBottom: 20,
-            }}>
+              color: '#15317E',
+              fontSize: 42,
+            }}
+            type={['center']}>
+            NEWS
+          </AppText>
+          <View style={{justifyContent: 'center'}}>
             <View
               style={{
-                alignSelf: 'center',
-                borderBottomColor: '#f00',
+                borderBottomColor: '#D3D3D3',
                 borderBottomWidth: 2,
-                zIndex: 1,
-                position: 'absolute',
-                width: 70,
-              }}
-            />
+                width: 150,
+                alignSelf: 'center',
+                marginBottom: 20,
+              }}>
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderBottomColor: '#f00',
+                  borderBottomWidth: 2,
+                  zIndex: 1,
+                  position: 'absolute',
+                  width: 70,
+                }}
+              />
+            </View>
           </View>
         </View>
+        {loading ? (
+          <ActivityIndicator />
+        ) : (
+          <FlatList
+            contentContainerStyle={{paddingHorizontal: `${base}%`}}
+            keyExtractor={(item, index) => `${item.id}-${index}`}
+            data={list}
+            // data={state.newsdata}
+            ListEmptyComponent={
+              !loading && (
+                <AppText type={['center', 'large']}>No News Found</AppText>
+              )
+            }
+            renderItem={({item, index}) => (
+              <NewsBox
+                key={index}
+                {...item}
+                id={item.id}
+                navigation={navigation}
+              />
+            )}
+          />
+        )}
       </View>
-      {loading ? (
-        <ActivityIndicator />
-      ) : (
-        <FlatList
-          contentContainerStyle={{paddingHorizontal: `${base}%`}}
-          keyExtractor={(item, index) => `${item.id}-${index}`}
-          data={list}
-          ListEmptyComponent={
-            !loading && (
-              <AppText type={['center', 'large']}>No News Found</AppText>
-            )
-          }
-          renderItem={({item, index}) => <NewsBox key={index} {...item} />}
-        />
-      )}
-    </View>
+    </ScrollView>
   );
 };
 
 const NewsBox = props => {
-  const {title, image} = props;
+  const {title, image, navigation, id} = props;
+  // console.log('here newsbox props', props);
   return (
     <TouchableOpacity
       style={{
         flex: 1,
-        // marginTop: 10,
-        // marginBottom: 10, top ani bottom vegla denya peksha vertical daycha direct
-        marginVertical: `${small}%`, //and dynamic thevaycha margin
+        marginVertical: `${small}%`,
         elevation: 2,
         backgroundColor: '#fff',
         borderColor: '#D3D3D3',
@@ -122,32 +142,21 @@ const NewsBox = props => {
         shadowOpacity: 1.0,
         shadowRadius: 3,
         shadowOffset: {width: 0, height: -8},
-      }}>
+      }}
+      onPress={() => navigation.navigate('NewsDetailsScreen', {newsId: id})}>
+      {/* // comma takun pudhe object madhe kiti pahijet tasa params pathvu shakto */}
       <Image
         style={{
-          // height: 150, height dynamic according to screen height
           height: window.height * 0.2,
           width: '100%',
         }}
-        resizeMode="cover" //very important property for image
+        resizeMode="cover"
         source={{uri: image}}
+        // source={require('../../images/property4.jpg')}
       />
       <View style={{margin: 20}}>
         <AppText type={['large', 'bold']}>{title}</AppText>
-        {/* <Text style={{color: '#000', fontSize: 22}}></Text>  */}
-        {/* <Text
-          style={{
-            color: '#666',
-            fontSize: 16,
-            paddingTop: 5,
-          }}>
-          Read more
-        </Text> */}
-
-        {/* //Apptext component banavla ahe me toh vapaar */}
-        {/* example usage */}
         <TouchableOpacity style={{marginTop: `${tiny}%`}}>
-          {/* //TouchableOpacity because tyala touch cha feel daycha aplyala */}
           <AppText type={['primary']}>Read More</AppText>
         </TouchableOpacity>
       </View>
